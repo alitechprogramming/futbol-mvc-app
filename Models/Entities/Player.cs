@@ -2,11 +2,12 @@
 {
     public class Player
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Position { get; set; }
-        public int Goles { get; set; }
+        public int Goals { get; set; }
         public int Height { get; set; }
-        public int Edad { get; set; }
+        public int BirthDate { get; set; }
         public int ClubId { get; set; }
     }
 }
