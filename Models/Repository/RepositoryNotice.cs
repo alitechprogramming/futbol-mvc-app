@@ -29,8 +29,6 @@ namespace AplicacionMVC.Models.Repository
         public void Save()
         {
             _footballAppContext.SaveChanges();
-        }
-
-       
+        }       
     }
 }
