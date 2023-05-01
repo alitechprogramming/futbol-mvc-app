@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContextPool<FootballAppContext>(options => options.UseSqlServer(
                 builder.Configuration.GetConnectionString("FootballAppContext")));
-builder.Services.AddScoped(typeof(IRepository), typeof(RepositoryNotice));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
