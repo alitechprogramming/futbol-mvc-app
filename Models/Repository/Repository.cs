@@ -11,6 +11,9 @@ namespace AplicacionMVC.Models.Repository
             _footballAppContext = footballAppContext;
             _dbSet = _footballAppContext.Set<TEntity>();
         }
+
+        public void Add(TEntity data) => _dbSet.Add(data);
+
         public void Delete(int id)
         {
             var objectToDelete = _dbSet.Find(id);

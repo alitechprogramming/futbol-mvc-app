@@ -3,6 +3,7 @@ using AplicacionMVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AplicacionMVC.Migrations
 {
     [DbContext(typeof(FootballAppContext))]
-    partial class FootballAppContextModelSnapshot : ModelSnapshot
+    [Migration("20230503220515_CambioTipoDeDatoImageUrlAByteArray")]
+    partial class CambioTipoDeDatoImageUrlAByteArray
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
