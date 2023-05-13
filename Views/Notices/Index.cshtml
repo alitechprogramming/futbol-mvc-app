@@ -1,25 +1,25 @@
-﻿@model IEnumerable<AplicacionMVC.Models.Entities.Notice>
+﻿@model IEnumerable<AplicacionMVC.ViewModels.NoticeListVM>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Lista de Noticias</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Crear Nuevo</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                Título
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Descripción
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UrlImage)
+                Imagen
             </th>
             <th></th>
         </tr>
@@ -34,12 +34,12 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UrlImage)
+                <img class="img-size" src="data:image/jpg;base64, @item.UrlImage" alt="Imagen">
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
             </td>
         </tr>
 }

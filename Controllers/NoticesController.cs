@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AplicacionMVC.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using AplicacionMVC.Models.Entities;
 using AplicacionMVC.ViewModels;
 using AplicacionMVC.Models.Repository;
@@ -24,7 +17,14 @@ namespace AplicacionMVC.Controllers
         // GET: Notices
         public async Task<IActionResult> Index()
         {
-            return View(_noticeRepository.Get());
+            var notices = _noticeRepository.Get().Select(p => new NoticeListVM
+            {
+                Id = p.Id,
+                Description = p.Description,
+                Title = p.Title,
+                UrlImage = Convert.ToBase64String(p.UrlImage) 
+            }).ToList();
+            return View(notices);
         }
 
         // GET: Notices/Details/5
