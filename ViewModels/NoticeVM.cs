@@ -1,6 +1,6 @@
 ﻿namespace AplicacionMVC.ViewModels
 {
-    public class NoticeListVM
+    public class NoticeVM
     {
         public int Id { get; set; }
         public string Title { get; set; }

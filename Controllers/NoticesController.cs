@@ -2,6 +2,8 @@
 using AplicacionMVC.Models.Entities;
 using AplicacionMVC.ViewModels;
 using AplicacionMVC.Models.Repository;
+using System.Collections;
+using System.Net.Http.Headers;
 
 namespace AplicacionMVC.Controllers
 {
@@ -17,7 +19,7 @@ namespace AplicacionMVC.Controllers
         // GET: Notices
         public async Task<IActionResult> Index()
         {
-            var notices = _noticeRepository.Get().Select(p => new NoticeListVM
+            var notices = _noticeRepository.Get().Select(p => new NoticeVM
             {
                 Id = p.Id,
                 Description = p.Description,
@@ -28,22 +30,21 @@ namespace AplicacionMVC.Controllers
         }
 
         // GET: Notices/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-            //if (id == null || _context.Notices == null)
-            //{
-            //    return NotFound();
-            //}
+        public async Task<IActionResult> Details(int id)
+        {
+            var notice = _noticeRepository.Get(id);
 
-            //var notice = await _context.Notices
-            //    .FirstOrDefaultAsync(m => m.Id == id);
-            //if (notice == null)
-            //{
-            //    return NotFound();
-            //}
+            if (id == 0 || notice == null)
+            {
+                return NotFound();
+            } 
+            
+            var noticeVM = new NoticeVM { Id = notice.Id, Description = notice.Description, Title = notice.Title,
+                UrlImage = Convert.ToBase64String(notice.UrlImage)
+            };
 
-            //return View(notice);
-        //}
+            return View(noticeVM);
+        }
 
         // GET: Notices/Create
         public IActionResult Create()
@@ -76,19 +77,25 @@ namespace AplicacionMVC.Controllers
         }
 
         // GET: Notices/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
+        //public async Task<IActionResult> Edit(int id)
         //{
-        //    if (id == null || _context.Notices == null)
-        //    {
-        //        return NotFound();
-        //    }
+        //    var notice = _noticeRepository.Get(id);
 
-        //    var notice = await _context.Notices.FindAsync(id);
-        //    if (notice == null)
+        //    if (id == 0 || notice == null)
         //    {
         //        return NotFound();
         //    }
-        //    return View(notice);
+        
+            
+        //    // Set the Content-Type header to the specified content type
+        //    var noticeVM = new NoticeFormVM
+        //    {
+        //        Id = notice.Id,
+        //        Description = notice.Description,
+        //        Title = notice.Title
+        //    };
+
+        //    return View(noticeVM);
         //}
 
         // POST: Notices/Edit/5
@@ -96,52 +103,51 @@ namespace AplicacionMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,UrlImage")] Notice notice)
+        //public async Task<IActionResult> Edit(int id, NoticeFormVM noticeViewModel)
         //{
-            //if (id != notice.Id)
-            //{
-            //    return NotFound();
-            //}
+        //    if (id != noticeViewModel.Id)
+        //    {
+        //        return NotFound();
+        //    }
 
-            //if (ModelState.IsValid)
-            //{
-            //    try
-            //    {
-            //        _context.Update(notice);
-            //        await _context.SaveChangesAsync();
-            //    }
-            //    catch (DbUpdateConcurrencyException)
-            //    {
-            //        if (!NoticeExists(notice.Id))
-            //        {
-            //            return NotFound();
-            //        }
-            //        else
-            //        {
-            //            throw;
-            //        }
-            //    }
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //return View(notice);
+        //    if (ModelState.IsValid)
+        //    {
+        //        byte[] bytesImage;
+        //        using (var stream = new MemoryStream())
+        //        {
+        //            await noticeViewModel.UrlImage.CopyToAsync(stream);
+        //            bytesImage = stream.ToArray();
+        //        }
+        //        Notice notice = new Notice()
+        //        {
+        //            Id = noticeViewModel.Id,
+        //            Description = noticeViewModel.Description,
+        //            Title = noticeViewModel.Title,
+        //            UrlImage = bytesImage
+        //        };
+        //        _noticeRepository.Update(notice);
+        //        _noticeRepository.Save();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(noticeViewModel);
         //}
 
         // GET: Notices/Delete/5
         //public async Task<IActionResult> Delete(int? id)
         //{
-            //if (id == null || _context.Notices == null)
-            //{
-            //    return NotFound();
-            //}
+        //if (id == null || _context.Notices == null)
+        //{
+        //    return NotFound();
+        //}
 
-            //var notice = await _context.Notices
-            //    .FirstOrDefaultAsync(m => m.Id == id);
-            //if (notice == null)
-            //{
-            //    return NotFound();
-            //}
+        //var notice = await _context.Notices
+        //    .FirstOrDefaultAsync(m => m.Id == id);
+        //if (notice == null)
+        //{
+        //    return NotFound();
+        //}
 
-            //return View(notice);
+        //return View(notice);
         //}
 
         // POST: Notices/Delete/5
@@ -158,7 +164,7 @@ namespace AplicacionMVC.Controllers
         //    {
         //        _context.Notices.Remove(notice);
         //    }
-            
+
         //    await _context.SaveChangesAsync();
         //    return RedirectToAction(nameof(Index));
         //}
