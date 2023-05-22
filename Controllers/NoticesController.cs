@@ -77,25 +77,19 @@ namespace AplicacionMVC.Controllers
         }
 
         // GET: Notices/Edit/5
-        //public async Task<IActionResult> Edit(int id)
+        //public async Task<IActionResult> Edit(int? id)
         //{
-        //    var notice = _noticeRepository.Get(id);
-
-        //    if (id == 0 || notice == null)
+        //    if (id == null || _context.Notices == null)
         //    {
         //        return NotFound();
         //    }
-        
-            
-        //    // Set the Content-Type header to the specified content type
-        //    var noticeVM = new NoticeFormVM
-        //    {
-        //        Id = notice.Id,
-        //        Description = notice.Description,
-        //        Title = notice.Title
-        //    };
 
-        //    return View(noticeVM);
+        //    var notice = await _context.Notices.FindAsync(id);
+        //    if (notice == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(notice);
         //}
 
         // POST: Notices/Edit/5
@@ -103,33 +97,34 @@ namespace AplicacionMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, NoticeFormVM noticeViewModel)
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,UrlImage")] Notice notice)
         //{
-        //    if (id != noticeViewModel.Id)
-        //    {
-        //        return NotFound();
-        //    }
+        //if (id != notice.Id)
+        //{
+        //    return NotFound();
+        //}
 
-        //    if (ModelState.IsValid)
+        //if (ModelState.IsValid)
+        //{
+        //    try
         //    {
-        //        byte[] bytesImage;
-        //        using (var stream = new MemoryStream())
-        //        {
-        //            await noticeViewModel.UrlImage.CopyToAsync(stream);
-        //            bytesImage = stream.ToArray();
-        //        }
-        //        Notice notice = new Notice()
-        //        {
-        //            Id = noticeViewModel.Id,
-        //            Description = noticeViewModel.Description,
-        //            Title = noticeViewModel.Title,
-        //            UrlImage = bytesImage
-        //        };
-        //        _noticeRepository.Update(notice);
-        //        _noticeRepository.Save();
-        //        return RedirectToAction(nameof(Index));
+        //        _context.Update(notice);
+        //        await _context.SaveChangesAsync();
         //    }
-        //    return View(noticeViewModel);
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!NoticeExists(notice.Id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+        //    return RedirectToAction(nameof(Index));
+        //}
+        //return View(notice);
         //}
 
         // GET: Notices/Delete/5
